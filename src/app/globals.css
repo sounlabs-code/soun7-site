@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+:root {
+  /* SOUN7 official brand palette */
+  --s7-black: #000000;
+  --s7-white: #ffffff;
+  --s7-anthracite: #4c545c;
+  --s7-silver-light: #f2f3f4;
+  --s7-silver-metal: #b0b7bd;
+  --s7-sky-blue: #59d5ff;
+  --s7-electric-blue: #1e78dc;
+  --s7-night-blue: #0b2f63;
+
+  --background: var(--s7-black);
+  --foreground: var(--s7-white);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-s7-black: var(--s7-black);
+  --color-s7-white: var(--s7-white);
+  --color-s7-anthracite: var(--s7-anthracite);
+  --color-s7-silver-light: var(--s7-silver-light);
+  --color-s7-silver-metal: var(--s7-silver-metal);
+  --color-s7-sky-blue: var(--s7-sky-blue);
+  --color-s7-electric-blue: var(--s7-electric-blue);
+  --color-s7-night-blue: var(--s7-night-blue);
+
+  --font-display: "Poppins", sans-serif;
+  --font-body: "Montserrat", Arial, sans-serif;
+  --font-slogan: "EB Garamond", Georgia, serif;
+  --font-tech: "Orbitron", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+}
+
+::selection {
+  background: var(--s7-electric-blue);
+  color: var(--s7-white);
+}
+
+/* Signature: dispersing pixel trail, echoing the S7 mark's particle break-off */
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: var(--drift-op, 0.55); }
+  50% { transform: translate3d(var(--drift-x, 6px), var(--drift-y, -8px), 0); opacity: 1; }
+}
+
+.s7-pixel {
+  animation: drift var(--drift-dur, 6s) ease-in-out infinite;
+  animation-delay: var(--drift-delay, 0s);
+}
+
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.s7-reveal {
+  opacity: 0;
+  animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes gradientPan {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.s7-gradient-text {
+  background: linear-gradient(90deg, var(--s7-silver-light), var(--s7-sky-blue), var(--s7-electric-blue), var(--s7-silver-light));
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientPan 8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .s7-pixel, .s7-reveal, .s7-gradient-text {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+.s7-noise {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0);
+  background-size: 28px 28px;
+}
