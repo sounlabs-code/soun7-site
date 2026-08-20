@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+:root {
+  --color-black: #000000;
+  --color-black-soft: #060708;
+  --color-anthracite: #4c545c;
+  --color-anthracite-soft: #14171a;
+  --color-silver: #b0b7bd;
+  --color-silver-light: #f2f3f4;
+  --color-white: #ffffff;
+  --color-sky: #59d5ff;
+  --color-electric: #1e78dc;
+  --color-navy: #0b2f63;
+}
+
+@theme inline {
+  --color-black: var(--color-black);
+  --color-black-soft: var(--color-black-soft);
+  --color-anthracite: var(--color-anthracite);
+  --color-anthracite-soft: var(--color-anthracite-soft);
+  --color-silver: var(--color-silver);
+  --color-silver-light: var(--color-silver-light);
+  --color-sky: var(--color-sky);
+  --color-electric: var(--color-electric);
+  --color-navy: var(--color-navy);
+
+  --font-display: var(--font-poppins);
+  --font-slogan: var(--font-playfair);
+  --font-sans: var(--font-montserrat);
+
+  --animate-drift: drift 26s linear infinite;
+  --animate-pulse-slow: pulse-slow 4s ease-in-out infinite;
+  --animate-rise: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes drift {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, -50%, 0); }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.85; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-black);
+  color: var(--color-silver-light);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-electric);
+  color: var(--color-white);
+}
+
+/* Signature motif: the diagonal "bridge" line borrowed from the S7 monogram,
+   reused as a structural rule beneath eyebrows and section labels. */
+.bridge-rule {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.bridge-rule::before {
+  content: "";
+  width: 26px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-sky), var(--color-electric));
+  transform: skewX(-20deg);
+}
+
+.text-gradient {
+  background: linear-gradient(115deg, var(--color-sky) 0%, var(--color-electric) 55%, var(--color-navy) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.card-border {
+  border: 1px solid rgba(176, 183, 189, 0.14);
+}
+
+.grain {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

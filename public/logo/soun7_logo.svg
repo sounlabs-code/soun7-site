@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254" width="1254" height="1254">
+  <defs>
+    <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f4f6f8"/>
+      <stop offset="45%" stop-color="#b9c1c7"/>
+      <stop offset="70%" stop-color="#7d8790"/>
+      <stop offset="100%" stop-color="#4c545c"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8fc7ff"/>
+      <stop offset="35%" stop-color="#2f7fe0"/>
+      <stop offset="70%" stop-color="#1552a8"/>
+      <stop offset="100%" stop-color="#0b2f63"/>
+    </linearGradient>
+    <linearGradient id="silverGradText" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#c3cad0"/>
+      <stop offset="100%" stop-color="#7c848c"/>
+    </linearGradient>
+    <linearGradient id="blueGradText" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5aa4f2"/>
+      <stop offset="100%" stop-color="#1656a8"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1254" height="1254" fill="#000000"/>
+
+  <!-- Icon: stylized interlocked S / 7 monogram -->
+  <g>
+    <!-- Top silver C-hook -->
+    <path d="M 700 300
+             C 610 300 545 350 545 420
+             C 545 470 580 500 630 505
+             L 700 505
+             C 660 505 630 490 630 460
+             C 630 425 665 405 705 405
+             L 760 405
+             L 700 320 Z"
+          fill="url(#silverGrad)"/>
+
+    <!-- Middle blue diagonal bridge -->
+    <path d="M 630 505
+             L 760 505
+             C 800 505 830 530 830 565
+             C 830 595 805 615 770 615
+             L 700 615
+             L 770 700
+             L 700 700
+             L 590 565
+             C 590 530 605 512 630 505 Z"
+          fill="url(#blueGrad)"/>
+
+    <!-- Bottom silver hook (mirrors top) -->
+    <path d="M 700 700
+             L 770 700
+             C 790 725 800 750 780 775
+             C 745 815 690 815 655 780
+             L 700 725 Z"
+          fill="url(#silverGrad)"/>
+
+    <!-- Bottom blue tail -->
+    <path d="M 700 700 L 770 700 L 895 850 L 825 850 Z" fill="url(#blueGrad)"/>
+
+    <!-- Scattered pixel particles, top right -->
+    <g fill="#2f7fe0">
+      <rect x="855" y="255" width="16" height="16"/>
+      <rect x="800" y="270" width="20" height="20" opacity="0.9"/>
+      <rect x="835" y="300" width="14" height="14" opacity="0.85"/>
+      <rect x="770" y="310" width="24" height="24"/>
+      <rect x="815" y="345" width="16" height="16" opacity="0.8"/>
+      <rect x="755" y="360" width="28" height="28"/>
+      <rect x="795" y="390" width="14" height="14" opacity="0.7"/>
+      <rect x="720" y="380" width="20" height="20" opacity="0.9"/>
+      <rect x="710" y="345" width="12" height="12" opacity="0.6"/>
+    </g>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="627" y="800" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif" font-weight="800"
+        font-style="italic" font-size="150" letter-spacing="4">
+    <tspan fill="url(#silverGradText)">SOUN</tspan><tspan fill="url(#blueGradText)">7</tspan>
+  </text>
+
+  <!-- Tagline -->
+  <text x="627" y="905" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="46">
+    <tspan fill="#f2f2f2">Connecting </tspan><tspan fill="#3f8ee8">Vision</tspan><tspan fill="#f2f2f2"> to </tspan><tspan fill="#3f8ee8">Reality</tspan>
+  </text>
+
+  <!-- decorative lines under tagline -->
+  <line x1="130" y1="900" x2="330" y2="900" stroke="#3f8ee8" stroke-width="2" opacity="0.7"/>
+  <line x1="930" y1="900" x2="1130" y2="900" stroke="#3f8ee8" stroke-width="2" opacity="0.7"/>
+</svg>
