@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import { useLanguage } from "@/lib/language-context";
+import { content } from "@/lib/content";
 
 // Pixel positions echo the dispersing squares of the S7 mark: a trail
 // breaking away from the icon, used here as the page's ambient signature.
@@ -16,6 +20,9 @@ const PIXELS = [
 ];
 
 export default function Hero() {
+  const { locale } = useLanguage();
+  const t = content[locale].hero;
+
   return (
     <section
       id="accueil"
@@ -69,26 +76,22 @@ export default function Hero() {
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8 w-full grid lg:grid-cols-[1.1fr_0.9fr] items-center gap-16">
         <div>
           <div className="s7-reveal inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-semibold tracking-wide text-s7-silver-metal uppercase">
-            SOUN SET SARL — Cotonou, Bénin
+            {t.badge}
           </div>
 
           <h1
             className="s7-reveal mt-7 font-display font-extrabold italic leading-[1.05] tracking-tight text-[2.6rem] sm:text-6xl lg:text-[4.2rem]"
             style={{ animationDelay: "0.1s" }}
           >
-            <span className="block text-s7-white">Là où l&apos;innovation</span>
-            <span className="s7-gradient-text block">prend vie.</span>
+            <span className="block text-s7-white">{t.title1}</span>
+            <span className="s7-gradient-text block">{t.title2}</span>
           </h1>
 
           <p
             className="s7-reveal mt-7 max-w-xl text-base sm:text-lg leading-relaxed text-s7-silver-light/75"
             style={{ animationDelay: "0.2s" }}
           >
-            Nous concevons des solutions numériques qui transforment les
-            idées en expériences, services et entreprises digitales —
-            applications, plateformes, intelligence artificielle et
-            infrastructures télécoms, pensées depuis l&apos;Afrique pour le
-            monde.
+            {t.paragraph}
           </p>
 
           <div
@@ -99,13 +102,13 @@ export default function Hero() {
               href="#solutions"
               className="inline-flex items-center justify-center rounded-full bg-s7-white px-7 py-3.5 text-sm font-semibold text-s7-black transition-transform duration-300 hover:scale-[1.03]"
             >
-              Découvrir SOUN7
+              {t.ctaPrimary}
             </a>
             <a
               href="#contact"
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-7 py-3.5 text-sm font-semibold text-s7-white hover:border-s7-sky-blue hover:text-s7-sky-blue transition-colors duration-300"
             >
-              Démarrer un projet
+              {t.ctaSecondary}
               <span aria-hidden>→</span>
             </a>
           </div>
@@ -114,7 +117,7 @@ export default function Hero() {
             className="s7-reveal mt-6 font-slogan italic text-s7-silver-metal text-sm sm:text-base"
             style={{ animationDelay: "0.35s" }}
           >
-            Connecting Vision to Reality
+            {t.tagline}
           </p>
         </div>
 

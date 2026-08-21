@@ -1,29 +1,13 @@
-import Image from "next/image";
+"use client";
 
-const POINTS = [
-  {
-    title: "Innovation",
-    desc: "Une veille technologique constante pour intégrer les bonnes idées au bon moment, sans effet de mode.",
-  },
-  {
-    title: "Expertise technologique",
-    desc: "Une maîtrise de bout en bout, du développement mobile à l'infrastructure télécoms.",
-  },
-  {
-    title: "Solutions sur mesure",
-    desc: "Chaque projet part d'un besoin réel, pas d'un modèle générique appliqué par défaut.",
-  },
-  {
-    title: "Vision africaine et internationale",
-    desc: "Des solutions conçues depuis le Bénin et le Gabon, avec des standards internationaux.",
-  },
-  {
-    title: "Accompagnement de bout en bout",
-    desc: "De l'idée au déploiement, puis dans la durée : maintenance, évolution et support.",
-  },
-];
+import Image from "next/image";
+import { useLanguage } from "@/lib/language-context";
+import { content } from "@/lib/content";
 
 export default function Pourquoi() {
+  const { locale } = useLanguage();
+  const t = content[locale].pourquoi;
+
   return (
     <section id="pourquoi" className="relative py-28 sm:py-36">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-[0.9fr_1.1fr] gap-16 items-center">
@@ -51,14 +35,14 @@ export default function Pourquoi() {
 
         <div className="order-1 lg:order-2">
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-s7-sky-blue">
-            Pourquoi SOUN7 ?
+            {t.eyebrow}
           </span>
           <h2 className="mt-4 font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-s7-white max-w-lg">
-            Un partenaire technologique, pas un simple prestataire
+            {t.title}
           </h2>
 
           <dl className="mt-12 space-y-8">
-            {POINTS.map((p, i) => (
+            {t.points.map((p, i) => (
               <div key={p.title} className="flex gap-5">
                 <span className="font-tech text-sm text-s7-electric-blue pt-1 shrink-0">
                   {String(i + 1).padStart(2, "0")}

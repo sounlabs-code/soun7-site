@@ -3,18 +3,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
-const NAV_LINKS = [
-  { href: "#solutions", label: "Solutions" },
-  { href: "#realisations", label: "Réalisations" },
-  { href: "#pourquoi", label: "Pourquoi SOUN7" },
-  { href: "#approche", label: "Approche" },
-  { href: "#a-propos", label: "À propos" },
-];
+import { useLanguage } from "@/lib/language-context";
+import { content } from "@/lib/content";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { locale, toggleLocale } = useLanguage();
+  const t = content[locale];
+
+  const navLinks = [
+    { href: "#solutions", label: t.nav.solutions },
+    { href: "#realisations", label: t.nav.realisations },
+    { href: "#pourquoi", label: t.nav.pourquoi },
+    { href: "#approche", label: t.nav.approche },
+    { href: "#a-propos", label: t.nav.apropos },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -31,7 +35,7 @@ export default function Header() {
           : "bg-transparent py-5"
       }`}
     >
-      <div className="mx-auto max-w-7xl px-5 sm:px-8 flex items-center justify-between">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 flex items-center justify-between gap-4">
         <Link href="#accueil" className="flex items-center gap-2.5 shrink-0">
           <Image
             src="/brand/soun7_icone_couleur.png"
@@ -47,7 +51,7 @@ export default function Header() {
         </Link>
 
         <nav className="hidden lg:flex items-center gap-8">
-          {NAV_LINKS.map((link) => (
+          {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -59,35 +63,74 @@ export default function Header() {
           ))}
         </nav>
 
-        <a
-          href="#contact"
-          className="hidden lg:inline-flex items-center rounded-full border border-s7-electric-blue/60 bg-s7-electric-blue/10 px-5 py-2.5 text-sm font-semibold text-s7-white hover:bg-s7-electric-blue hover:border-s7-electric-blue transition-colors duration-300"
-        >
-          Démarrer un projet
-        </a>
+        <div className="hidden lg:flex items-center gap-4">
+          <button
+            type="button"
+            onClick={toggleLocale}
+            aria-label="Changer de langue / Switch language"
+            className="inline-flex items-center rounded-full border border-white/15 text-xs font-semibold overflow-hidden"
+          >
+            <span
+              className={`px-3 py-1.5 transition-colors ${
+                locale === "fr"
+                  ? "bg-s7-electric-blue text-s7-white"
+                  : "text-s7-silver-light/60"
+              }`}
+            >
+              FR
+            </span>
+            <span
+              className={`px-3 py-1.5 transition-colors ${
+                locale === "en"
+                  ? "bg-s7-electric-blue text-s7-white"
+                  : "text-s7-silver-light/60"
+              }`}
+            >
+              EN
+            </span>
+          </button>
 
-        <button
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Ouvrir le menu"
-          aria-expanded={open}
-          className="lg:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5"
-        >
-          <span
-            className={`block h-px w-6 bg-s7-white transition-transform duration-300 ${
-              open ? "translate-y-[3.5px] rotate-45" : ""
-            }`}
-          />
-          <span
-            className={`block h-px w-6 bg-s7-white transition-transform duration-300 ${
-              open ? "-translate-y-[3.5px] -rotate-45" : ""
-            }`}
-          />
-        </button>
+          <a
+            href="#contact"
+            className="inline-flex items-center rounded-full border border-s7-electric-blue/60 bg-s7-electric-blue/10 px-5 py-2.5 text-sm font-semibold text-s7-white hover:bg-s7-electric-blue hover:border-s7-electric-blue transition-colors duration-300"
+          >
+            {t.nav.cta}
+          </a>
+        </div>
+
+        <div className="flex items-center gap-3 lg:hidden">
+          <button
+            type="button"
+            onClick={toggleLocale}
+            aria-label="Changer de langue / Switch language"
+            className="inline-flex items-center rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-s7-silver-light/80"
+          >
+            {locale === "fr" ? "EN" : "FR"}
+          </button>
+
+          <button
+            onClick={() => setOpen((v) => !v)}
+            aria-label={t.nav.menuLabel}
+            aria-expanded={open}
+            className="flex flex-col justify-center items-center w-10 h-10 gap-1.5"
+          >
+            <span
+              className={`block h-px w-6 bg-s7-white transition-transform duration-300 ${
+                open ? "translate-y-[3.5px] rotate-45" : ""
+              }`}
+            />
+            <span
+              className={`block h-px w-6 bg-s7-white transition-transform duration-300 ${
+                open ? "-translate-y-[3.5px] -rotate-45" : ""
+              }`}
+            />
+          </button>
+        </div>
       </div>
 
       {open && (
         <div className="lg:hidden mx-5 mt-4 rounded-2xl border border-white/10 bg-s7-black/95 backdrop-blur-xl px-6 py-6 flex flex-col gap-5">
-          {NAV_LINKS.map((link) => (
+          {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -102,7 +145,7 @@ export default function Header() {
             onClick={() => setOpen(false)}
             className="mt-2 inline-flex items-center justify-center rounded-full bg-s7-electric-blue px-5 py-3 text-sm font-semibold text-s7-white"
           >
-            Démarrer un projet
+            {t.nav.cta}
           </a>
         </div>
       )}

@@ -1,6 +1,13 @@
+"use client";
+
 import Image from "next/image";
+import { useLanguage } from "@/lib/language-context";
+import { content } from "@/lib/content";
 
 export default function Footer() {
+  const { locale } = useLanguage();
+  const t = content[locale].footer;
+
   return (
     <footer className="border-t border-white/10 py-12">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
@@ -17,16 +24,16 @@ export default function Footer() {
           </span>
           <span className="hidden sm:inline text-s7-silver-metal/40">|</span>
           <span className="text-xs text-s7-silver-metal/60">
-            Une marque de SOUN SET SARL
+            {t.brandNote}
           </span>
         </div>
 
         <p className="text-xs text-s7-silver-metal/50 text-center">
-          © {new Date().getFullYear()} SOUN SET SARL — Cotonou, Bénin. Tous droits réservés.
+          {t.rights(new Date().getFullYear())}
         </p>
 
         <p className="font-slogan italic text-xs text-s7-silver-metal/60">
-          Connecting Vision to Reality
+          {t.tagline}
         </p>
       </div>
     </footer>

@@ -17,6 +17,7 @@ import "@fontsource/orbitron/800.css";
 import "@fontsource/eb-garamond/500-italic.css";
 import "@fontsource/eb-garamond/600-italic.css";
 import "./globals.css";
+import { LanguageProvider } from "@/lib/language-context";
 
 const siteUrl = "https://www.soun7.com";
 
@@ -80,7 +81,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="fr" className="h-full antialiased">
       <body className="min-h-full flex flex-col bg-s7-black text-s7-white font-body">
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );
