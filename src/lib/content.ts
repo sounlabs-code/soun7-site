@@ -29,7 +29,12 @@ export type ContentShape = {
     eyebrow: string;
     title: string;
     intro: string;
-    projects: { name: string; category: string; desc: string }[];
+    projects: {
+      slug?: string;
+      name: string;
+      category: string;
+      desc: string;
+    }[];
     more: string;
   };
   pourquoi: {
@@ -76,6 +81,17 @@ export type ContentShape = {
     brandNote: string;
     rights: (year: number) => string;
     tagline: string;
+  };
+  appDetail: {
+    back: string;
+    problemLabel: string;
+    solutionLabel: string;
+    featuresLabel: string;
+    screensLabel: string;
+    ctaTitle: string;
+    ctaText: string;
+    ctaButton: string;
+    videoSoon: string;
   };
 };
 
@@ -145,14 +161,22 @@ export const content: Record<Locale, ContentShape> = {
         "Une sélection de projets numériques conçus et développés par SOUN7, en constante évolution.",
       projects: [
         {
+          slug: "benin-explore",
           name: "Bénin Explore",
           category: "Application mobile · Tourisme",
           desc: "Guide touristique du Bénin avec itinéraires GPS, suggestions de proximité et back-office professionnel pour restaurants et agences.",
         },
         {
+          slug: "dispo",
           name: "DISPO",
           category: "Marketplace · Afrique de l'Ouest et du Centre",
           desc: "Plateforme de mise en relation multi-pays, avec module de promotion d'annonces et paiement mobile intégré.",
+        },
+        {
+          slug: "kondo",
+          name: "KONDO",
+          category: "Streaming vidéo · Contenu africain",
+          desc: "Plateforme de streaming dédiée au cinéma et aux séries africaines, avec un mécanisme de soutien à la création intégré.",
         },
         {
           name: "RACINES",
@@ -258,6 +282,18 @@ export const content: Record<Locale, ContentShape> = {
         `© ${year} SOUN SET SARL · Cotonou, Bénin. Tous droits réservés.`,
       tagline: "Connecting Vision to Reality",
     },
+    appDetail: {
+      back: "Retour aux réalisations",
+      problemLabel: "Le constat",
+      solutionLabel: "La réponse",
+      featuresLabel: "Fonctionnalités clés",
+      screensLabel: "Aperçu de l'application",
+      ctaTitle: "Un projet similaire en tête ?",
+      ctaText:
+        "Discutons de votre projet et de la meilleure façon de le concrétiser.",
+      ctaButton: "Démarrer un projet",
+      videoSoon: "Démonstration vidéo à venir",
+    },
   },
 
   en: {
@@ -325,14 +361,22 @@ export const content: Record<Locale, ContentShape> = {
         "A selection of digital projects designed and built by SOUN7, constantly evolving.",
       projects: [
         {
+          slug: "benin-explore",
           name: "Bénin Explore",
           category: "Mobile application · Tourism",
           desc: "A tourism guide to Benin with GPS itineraries, proximity suggestions and a professional back office for restaurants and agencies.",
         },
         {
+          slug: "dispo",
           name: "DISPO",
           category: "Marketplace · West & Central Africa",
           desc: "A multi-country marketplace platform, with an ad-boosting module and integrated mobile payment.",
+        },
+        {
+          slug: "kondo",
+          name: "KONDO",
+          category: "Video streaming · African content",
+          desc: "A streaming platform dedicated to African film and series, with a built-in mechanism to support creators.",
         },
         {
           name: "RACINES",
@@ -437,6 +481,17 @@ export const content: Record<Locale, ContentShape> = {
       rights: (year) =>
         `© ${year} SOUN SET SARL · Cotonou, Benin. All rights reserved.`,
       tagline: "Connecting Vision to Reality",
+    },
+    appDetail: {
+      back: "Back to our work",
+      problemLabel: "The problem",
+      solutionLabel: "The solution",
+      featuresLabel: "Key features",
+      screensLabel: "App preview",
+      ctaTitle: "Have a similar project in mind?",
+      ctaText: "Let's talk about your project and the best way to build it.",
+      ctaButton: "Start a project",
+      videoSoon: "Video demo coming soon",
     },
   },
 };

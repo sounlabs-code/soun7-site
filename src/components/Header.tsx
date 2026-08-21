@@ -13,11 +13,11 @@ export default function Header() {
   const t = content[locale];
 
   const navLinks = [
-    { href: "#solutions", label: t.nav.solutions },
-    { href: "#realisations", label: t.nav.realisations },
-    { href: "#pourquoi", label: t.nav.pourquoi },
-    { href: "#approche", label: t.nav.approche },
-    { href: "#a-propos", label: t.nav.apropos },
+    { href: "/#solutions", label: t.nav.solutions },
+    { href: "/#realisations", label: t.nav.realisations },
+    { href: "/#pourquoi", label: t.nav.pourquoi },
+    { href: "/#approche", label: t.nav.approche },
+    { href: "/#a-propos", label: t.nav.apropos },
   ];
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-8 flex items-center justify-between gap-4">
-        <Link href="#accueil" className="flex items-center gap-2.5 shrink-0">
+        <Link href="/#accueil" className="flex items-center gap-2.5 shrink-0">
           <Image
             src="/brand/soun7_icone_couleur.png"
             alt="SOUN7"
@@ -52,14 +52,14 @@ export default function Header() {
 
         <nav className="hidden lg:flex items-center gap-8">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               className="text-sm font-medium text-s7-silver-light/80 hover:text-s7-white transition-colors relative group"
             >
               {link.label}
               <span className="absolute -bottom-1 left-0 w-0 h-px bg-s7-sky-blue transition-all duration-300 group-hover:w-full" />
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -90,12 +90,12 @@ export default function Header() {
             </span>
           </button>
 
-          <a
-            href="#contact"
+          <Link
+            href="/#contact"
             className="inline-flex items-center rounded-full border border-s7-electric-blue/60 bg-s7-electric-blue/10 px-5 py-2.5 text-sm font-semibold text-s7-white hover:bg-s7-electric-blue hover:border-s7-electric-blue transition-colors duration-300"
           >
             {t.nav.cta}
-          </a>
+          </Link>
         </div>
 
         <div className="flex items-center gap-3 lg:hidden">
@@ -131,22 +131,22 @@ export default function Header() {
       {open && (
         <div className="lg:hidden mx-5 mt-4 rounded-2xl border border-white/10 bg-s7-black/95 backdrop-blur-xl px-6 py-6 flex flex-col gap-5">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
               className="text-base font-medium text-s7-silver-light"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
-          <a
-            href="#contact"
+          <Link
+            href="/#contact"
             onClick={() => setOpen(false)}
             className="mt-2 inline-flex items-center justify-center rounded-full bg-s7-electric-blue px-5 py-3 text-sm font-semibold text-s7-white"
           >
             {t.nav.cta}
-          </a>
+          </Link>
         </div>
       )}
     </header>
