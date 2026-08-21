@@ -65,8 +65,8 @@ export const appsContent: Record<string, AppDetailShape> = {
       {
         src: "/realisations/kondo/kondo-02-accueil-sombre.jpg",
         alt: {
-          fr: "Le même écran d'accueil en mode sombre",
-          en: "The same home screen in dark mode",
+          fr: "Écran d'accueil de KONDO en mode sombre, avec un autre titre à la une",
+          en: "KONDO home screen in dark mode, with a different featured title",
         },
       },
     ],
