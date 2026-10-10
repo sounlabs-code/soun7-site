@@ -14,6 +14,7 @@ export type AppDetailShape = {
   problem: { fr: string; en: string };
   solution: { fr: string; en: string };
   features: { fr: string[]; en: string[] };
+  video?: { src: string; poster: string };
   screens: AppScreen[];
 };
 
@@ -72,63 +73,64 @@ export const appsContent: Record<string, AppDetailShape> = {
     ],
   },
 
-  "benin-explore": {
-    slug: "benin-explore",
-    name: "Bénin Explore",
-    status: { fr: "En développement", en: "In development" },
+  "balise": {
+    slug: "balise",
+    name: "Balise",
+    status: { fr: "Disponible au Bénin", en: "Live in Benin" },
     category: {
-      fr: "Tourisme · Guide numérique",
-      en: "Tourism · Digital guide",
+      fr: "Voyage · Découverte & réservation",
+      en: "Travel · Discovery & booking",
     },
     tagline: {
-      fr: "Le Bénin à explorer, du lieu à la réservation.",
-      en: "Benin to explore, from the place to the booking.",
+      fr: "Visitez, réservez, explorez : le Bénin dans une seule application.",
+      en: "Visit, book, explore: Benin in a single app.",
     },
     problem: {
-      fr: "Le tourisme au Bénin reste difficile d'accès pour qui ne connaît pas déjà le pays : peu d'outils centralisent lieux, prestataires et réservations en un seul endroit.",
-      en: "Tourism in Benin remains hard to access for anyone unfamiliar with the country: few tools bring places, providers and bookings together in one spot.",
+      fr: "Préparer un séjour au Bénin reste difficile pour qui ne connaît pas déjà le pays : lieux, prestataires, transports et réservations sont dispersés.",
+      en: "Planning a stay in Benin remains hard for anyone unfamiliar with the country: places, providers, transport and bookings are scattered.",
     },
     solution: {
-      fr: "Bénin Explore réunit dans une seule application la découverte, la réservation et l'organisation d'un séjour au Bénin, du lieu culturel à l'expérience bien-être.",
-      en: "Bénin Explore brings discovery, booking and trip planning together in a single app, from cultural sites to wellness experiences.",
+      fr: "Balise réunit la découverte, la réservation et l'organisation du séjour dans une seule application, payable par Mobile Money. Elle ouvre au Bénin et s'étendra au Gabon, à la Côte d'Ivoire et au Togo.",
+      en: "Balise brings discovery, booking and trip planning together in one app, payable by Mobile Money. It opens in Benin and will expand to Gabon, Côte d'Ivoire and Togo.",
     },
     features: {
       fr: [
-        "Recherche guidée par question, pour orienter la découverte selon l'envie du moment",
-        "Accès rapide par type de service : lieux, location de véhicule, restaurants, hébergements",
-        "Exploration par thématique : culture et histoire, nature et aventure, plages et détente, artisanat et marchés",
-        "Fiches d'activités détaillées avec note, localisation, description et horaires",
-        "Ajout direct d'une activité à un parcours personnalisé",
+        "Sites à visiter, restaurants, hébergements et location de véhicules, avec photos, horaires et avis",
+        "Réservation en quelques gestes et paiement par Mobile Money, billet disponible même sans réseau",
+        "Programme de voyage jour par jour, avec les temps de trajet entre chaque visite",
+        "Balise Airport : transfert depuis ou vers l'aéroport de Cotonou",
+        "Proximité : pharmacies, boutiques et adresses utiles autour de soi, sur une carte",
+        "Disponible en français, anglais, espagnol, allemand et portugais",
       ],
       en: [
-        "Guided search that adapts to what the traveler feels like doing",
-        "Quick access by service type: places, vehicle rental, restaurants, accommodation",
-        "Browsing by theme: culture and history, nature and adventure, beaches and relaxation, crafts and markets",
-        "Detailed activity pages with rating, location, description and schedule",
-        "One-tap add to a personal itinerary",
+        "Places to visit, restaurants, accommodation and vehicle rental, with photos, hours and reviews",
+        "Book in a few taps and pay by Mobile Money, with tickets available offline",
+        "Day-by-day trip planner, with travel times between each visit",
+        "Balise Airport: transfers to and from Cotonou airport",
+        "Nearby: pharmacies, shops and useful places around you, on a map",
+        "Available in French, English, Spanish, German and Portuguese",
       ],
     },
+    video: { src: "/videos/balise-pub.mp4", poster: "/videos/balise-pub-poster.jpg" },
     screens: [
       {
-        src: "/realisations/benin-explore/benin-explore-01-marque.jpg",
+        src: "/realisations/balise/balise-1_accueil.jpg",
         alt: {
-          fr: "Écran de marque de Bénin Explore avec la baseline \"Votre guide numérique pour découvrir le Bénin autrement\"",
-          en: "Bénin Explore brand screen with the tagline \"Your digital guide to discover Benin differently\"",
+          fr: "Écran d'accueil de Balise : recherche, catégories d'exploration et meilleures destinations",
+          en: "Balise home screen: search, browsing categories and top destinations",
         },
       },
       {
-        src: "/realisations/benin-explore/benin-explore-02-accueil.jpg",
-        alt: {
-          fr: "Écran d'accueil avec la recherche guidée et les catégories d'exploration",
-          en: "Home screen with guided search and browsing categories",
-        },
+        src: "/realisations/balise/balise-2_lieux.jpg",
+        alt: { fr: "Liste des lieux à visiter", en: "List of places to visit" },
       },
       {
-        src: "/realisations/benin-explore/benin-explore-03-detail.jpg",
-        alt: {
-          fr: "Fiche détaillée d'une activité, avec description et bouton d'ajout au parcours",
-          en: "Detailed activity page, with description and add-to-itinerary button",
-        },
+        src: "/realisations/balise/balise-3_restaurants.jpg",
+        alt: { fr: "Restaurants et réservation de table", en: "Restaurants and table booking" },
+      },
+      {
+        src: "/realisations/balise/balise-5_preparer.jpg",
+        alt: { fr: "Guide pour préparer son voyage", en: "Guide to prepare the trip" },
       },
     ],
   },
@@ -136,7 +138,7 @@ export const appsContent: Record<string, AppDetailShape> = {
   "dispo": {
     slug: "dispo",
     name: "DISPO",
-    status: { fr: "En développement", en: "In development" },
+    status: { fr: "Disponible sur le Play Store", en: "Available on the Play Store" },
     category: {
       fr: "Marketplace · Services & annonces",
       en: "Marketplace · Services & listings",
@@ -167,6 +169,7 @@ export const appsContent: Record<string, AppDetailShape> = {
         "DISPO ANNONCE module to publish a listing on Facebook and Instagram from within the app",
       ],
     },
+    video: { src: "/videos/dispo-pub.mp4", poster: "/videos/dispo-pub-poster.jpg" },
     screens: [
       {
         src: "/realisations/dispo/dispo-01-accueil.jpg",
@@ -189,6 +192,7 @@ export function localizedApp(app: AppDetailShape, locale: Locale) {
     problem: app.problem[locale],
     solution: app.solution[locale],
     features: app.features[locale],
+    video: app.video,
     screens: app.screens.map((s) => ({ src: s.src, alt: s.alt[locale] })),
   };
 }

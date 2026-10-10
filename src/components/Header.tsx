@@ -1,23 +1,30 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/lib/language-context";
 import { content } from "@/lib/content";
+import Brand from "@/components/Brand";
+
+const SECTIONS = ["accueil", "solutions", "realisations", "approche", "a-propos", "contact"] as const;
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<string>("accueil");
   const { locale, toggleLocale } = useLanguage();
+  const pathname = usePathname();
   const t = content[locale];
+  const onHome = pathname === "/";
 
   const navLinks = [
-    { href: "/#solutions", label: t.nav.solutions },
-    { href: "/#realisations", label: t.nav.realisations },
-    { href: "/#pourquoi", label: t.nav.pourquoi },
-    { href: "/#approche", label: t.nav.approche },
-    { href: "/#a-propos", label: t.nav.apropos },
+    { id: "accueil", label: t.nav.home },
+    { id: "solutions", label: t.nav.solutions },
+    { id: "realisations", label: t.nav.realisations },
+    { id: "approche", label: t.nav.approche },
+    { id: "a-propos", label: t.nav.apropos },
+    { id: "contact", label: t.nav.contact },
   ];
 
   useEffect(() => {
@@ -27,115 +34,115 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Scroll spy: highlight the section currently in view.
+  useEffect(() => {
+    if (!onHome) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+    SECTIONS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+    return () => io.disconnect();
+  }, [onHome]);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-s7-black/85 backdrop-blur-md border-b border-white/10 py-3"
+          ? "border-b border-white/[0.07] bg-s7-abyss/75 py-3 backdrop-blur-xl"
           : "bg-transparent py-5"
       }`}
     >
-      <div className="mx-auto max-w-7xl px-5 sm:px-8 flex items-center justify-between gap-4">
-        <Link href="/#accueil" className="flex items-center gap-2.5 shrink-0">
-          <Image
-            src="/brand/soun7_icone_couleur.png"
-            alt="SOUN7"
-            width={40}
-            height={38}
-            className="h-9 w-auto"
-            priority
-          />
-          <span className="font-display font-extrabold italic tracking-tight text-lg sm:text-xl text-s7-white">
-            SOUN<span className="text-s7-electric-blue">7</span>
-          </span>
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
+        <Link href="/#accueil" aria-label="SOUN7 — Accueil" className="shrink-0">
+          <Brand />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-s7-silver-light/80 hover:text-s7-white transition-colors relative group"
-            >
-              {link.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-s7-sky-blue transition-all duration-300 group-hover:w-full" />
-            </Link>
-          ))}
+        <nav aria-label="Navigation principale" className="hidden items-center gap-1 lg:flex">
+          {navLinks.map((link) => {
+            const isActive = onHome && active === link.id;
+            return (
+              <Link
+                key={link.id}
+                href={`/#${link.id}`}
+                aria-current={isActive ? "true" : undefined}
+                className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  isActive ? "text-s7-white" : "text-s7-silver-light/65 hover:text-s7-white"
+                }`}
+              >
+                {link.label}
+                <span
+                  className={`absolute inset-x-4 -bottom-0.5 h-px origin-left bg-gradient-to-r from-s7-electric-blue to-s7-sky-blue shadow-[0_0_8px_#59d5ff] transition-transform duration-500 ${
+                    isActive ? "scale-x-100" : "scale-x-0"
+                  }`}
+                />
+              </Link>
+            );
+          })}
         </nav>
 
-        <div className="hidden lg:flex items-center gap-4">
-          <button
-            type="button"
-            onClick={toggleLocale}
-            aria-label="Changer de langue / Switch language"
-            className="inline-flex items-center rounded-full border border-white/15 text-xs font-semibold overflow-hidden"
-          >
-            <span
-              className={`px-3 py-1.5 transition-colors ${
-                locale === "fr"
-                  ? "bg-s7-electric-blue text-s7-white"
-                  : "text-s7-silver-light/60"
-              }`}
-            >
-              FR
-            </span>
-            <span
-              className={`px-3 py-1.5 transition-colors ${
-                locale === "en"
-                  ? "bg-s7-electric-blue text-s7-white"
-                  : "text-s7-silver-light/60"
-              }`}
-            >
-              EN
-            </span>
-          </button>
-
-          <Link
-            href="/#contact"
-            className="inline-flex items-center rounded-full border border-s7-electric-blue/60 bg-s7-electric-blue/10 px-5 py-2.5 text-sm font-semibold text-s7-white hover:bg-s7-electric-blue hover:border-s7-electric-blue transition-colors duration-300"
-          >
+        <div className="hidden items-center gap-3 lg:flex">
+          <Link href="/#contact" className="s7-btn s7-btn-primary !px-5 !py-2.5">
             {t.nav.cta}
           </Link>
-        </div>
-
-        <div className="flex items-center gap-3 lg:hidden">
           <button
             type="button"
             onClick={toggleLocale}
             aria-label="Changer de langue / Switch language"
-            className="inline-flex items-center rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-s7-silver-light/80"
+            className="rounded-full border border-white/15 px-3 py-2 font-tech text-[0.7rem] font-semibold text-s7-silver-light/80 transition-colors hover:border-s7-sky-blue hover:text-s7-white"
+          >
+            {locale === "fr" ? "FR" : "EN"} <span className="text-s7-silver-metal/50">/ {locale === "fr" ? "EN" : "FR"}</span>
+          </button>
+        </div>
+
+        <div className="flex items-center gap-2 lg:hidden">
+          <button
+            type="button"
+            onClick={toggleLocale}
+            aria-label="Changer de langue / Switch language"
+            className="rounded-full border border-white/15 px-3 py-1.5 font-tech text-xs font-semibold text-s7-silver-light/80"
           >
             {locale === "fr" ? "EN" : "FR"}
           </button>
-
           <button
+            type="button"
             onClick={() => setOpen((v) => !v)}
             aria-label={t.nav.menuLabel}
             aria-expanded={open}
-            className="flex flex-col justify-center items-center w-10 h-10 gap-1.5"
+            aria-controls="menu-mobile"
+            className="flex h-10 w-10 flex-col items-center justify-center gap-1.5"
           >
-            <span
-              className={`block h-px w-6 bg-s7-white transition-transform duration-300 ${
-                open ? "translate-y-[3.5px] rotate-45" : ""
-              }`}
-            />
-            <span
-              className={`block h-px w-6 bg-s7-white transition-transform duration-300 ${
-                open ? "-translate-y-[3.5px] -rotate-45" : ""
-              }`}
-            />
+            <span className={`block h-px w-6 bg-s7-white transition-transform duration-300 ${open ? "translate-y-[3.5px] rotate-45" : ""}`} />
+            <span className={`block h-px w-6 bg-s7-white transition-transform duration-300 ${open ? "-translate-y-[3.5px] -rotate-45" : ""}`} />
           </button>
         </div>
       </div>
 
       {open && (
-        <div className="lg:hidden mx-5 mt-4 rounded-2xl border border-white/10 bg-s7-black/95 backdrop-blur-xl px-6 py-6 flex flex-col gap-5">
+        <div
+          id="menu-mobile"
+          className="s7-glass mx-4 mt-3 flex flex-col gap-1 rounded-2xl !bg-s7-deep/95 px-4 py-4 lg:hidden"
+        >
           {navLinks.map((link) => (
             <Link
-              key={link.href}
-              href={link.href}
+              key={link.id}
+              href={`/#${link.id}`}
               onClick={() => setOpen(false)}
-              className="text-base font-medium text-s7-silver-light"
+              className="rounded-xl px-3 py-3 text-base font-medium text-s7-silver-light hover:bg-white/5"
             >
               {link.label}
             </Link>
@@ -143,7 +150,7 @@ export default function Header() {
           <Link
             href="/#contact"
             onClick={() => setOpen(false)}
-            className="mt-2 inline-flex items-center justify-center rounded-full bg-s7-electric-blue px-5 py-3 text-sm font-semibold text-s7-white"
+            className="s7-btn s7-btn-primary mt-2"
           >
             {t.nav.cta}
           </Link>

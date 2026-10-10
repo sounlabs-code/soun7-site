@@ -16,8 +16,13 @@ export default function AppDetailClient({ slug }: { slug: string }) {
   return (
     <>
       <Header />
-      <main className="pt-32 pb-28">
-        <div className="mx-auto max-w-5xl px-5 sm:px-8">
+      <main className="relative pt-32 pb-28">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-[40rem]"
+          style={{ background: "radial-gradient(ellipse 60% 60% at 70% 0%, rgba(30,120,220,0.22), transparent 70%)" }}
+        />
+        <div className="relative mx-auto max-w-5xl px-5 sm:px-8">
           <Link
             href="/#realisations"
             className="inline-flex items-center gap-2 text-sm text-s7-silver-light/60 hover:text-s7-white transition-colors"
@@ -41,6 +46,30 @@ export default function AppDetailClient({ slug }: { slug: string }) {
           <p className="mt-4 max-w-xl text-lg text-s7-silver-light/70 leading-relaxed">
             {app.tagline}
           </p>
+
+          {app.video && (
+            <div data-reveal="up" className="mt-14 grid items-center gap-10 sm:grid-cols-[auto_1fr]">
+              <div className="s7-phone mx-auto w-[260px] sm:w-[300px]">
+                <div className="s7-phone-screen">
+                  <video
+                    src={app.video.src}
+                    poster={app.video.poster}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    aria-label={`${t.videoLabel} — ${app.name}`}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                </div>
+              </div>
+              <div>
+                <span className="s7-eyebrow">{t.videoLabel}</span>
+                <p className="mt-4 max-w-md text-base leading-relaxed text-s7-silver-light/75 sm:text-lg">
+                  {app.solution}
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* Screens */}
           <div className="mt-14">
@@ -69,11 +98,13 @@ export default function AppDetailClient({ slug }: { slug: string }) {
                 </figure>
               ))}
 
-              <div className="shrink-0 w-[220px] sm:w-[260px] snap-start flex items-center justify-center rounded-[1.5rem] border border-dashed border-white/15 text-center px-5">
-                <p className="text-xs text-s7-silver-light/45">
-                  {t.videoSoon}
-                </p>
-              </div>
+              {!app.video && (
+                <div className="shrink-0 w-[220px] sm:w-[260px] snap-start flex items-center justify-center rounded-[1.5rem] border border-dashed border-white/15 text-center px-5">
+                  <p className="text-xs text-s7-silver-light/45">
+                    {t.videoSoon}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -118,7 +149,7 @@ export default function AppDetailClient({ slug }: { slug: string }) {
           </div>
 
           {/* CTA */}
-          <div className="mt-20 rounded-2xl border border-white/10 bg-white/[0.02] p-10 text-center">
+          <div data-reveal="up" className="s7-glass mt-20 rounded-3xl p-10 text-center">
             <h2 className="font-display font-bold text-2xl sm:text-3xl text-s7-white">
               {t.ctaTitle}
             </h2>
@@ -127,7 +158,7 @@ export default function AppDetailClient({ slug }: { slug: string }) {
             </p>
             <Link
               href="/#contact"
-              className="mt-7 inline-flex items-center justify-center rounded-full bg-s7-electric-blue px-7 py-3.5 text-sm font-semibold text-s7-white hover:brightness-110 transition-all duration-300"
+              className="s7-btn s7-btn-primary mt-7"
             >
               {t.ctaButton}
             </Link>

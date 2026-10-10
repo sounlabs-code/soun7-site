@@ -10,6 +10,8 @@ Accroche du site : *Là où l'innovation prend vie*
 
 - [Next.js 16](https://nextjs.org/) (App Router, TypeScript)
 - [Tailwind CSS v4](https://tailwindcss.com/)
+- [GSAP](https://gsap.com/) + ScrollTrigger pour le motion design (intro du
+  hero, révélations au défilement, ligne du processus)
 - Polices auto-hébergées via [Fontsource](https://fontsource.org/) (Poppins,
   Montserrat, Orbitron, EB Garamond) — pas de dépendance à Google Fonts au
   moment du build
@@ -45,14 +47,18 @@ src/
     Header.tsx        → navigation + logo
     Hero.tsx           → section d'accueil
     Solutions.tsx       → les 6 pôles d'expertise
-    Realisations.tsx     → Bénin Explore, DISPO, RACINES...
-    Pourquoi.tsx          → pourquoi SOUN7
+    Realisations.tsx     → DISPO, KONDO, Balise, RACINES (+ vidéos)
     Approche.tsx           → processus en 4 étapes
-    About.tsx               → à propos
+    About.tsx               → à propos (Afrique en réseau)
+    MotionProvider.tsx       → révélations data-reveal + barre de progression
+    fx/HeroLogo.tsx           → icône S7 officielle formée par particules
+    fx/AfricaGlobe.tsx         → globe Afrique (canvas)
+    fx/SolutionArt.tsx          → illustrations animées des 6 pôles
     Contact.tsx              → formulaire de contact
     Footer.tsx
 public/
   brand/               → logo SOUN7 (SVG + PNG), icône S7
+  videos/              → pubs DISPO et Balise (720p, H.264, faststart)
   favicon.ico, favicon-32x32.png, favicon-64x64.png
 ```
 
@@ -88,7 +94,18 @@ lien `mailto:` actuel n'a pas besoin de backend et fonctionne immédiatement.
 - Nom de domaine réel dans `src/app/layout.tsx` (`siteUrl`), `sitemap.ts` et
   `robots.ts` (actuellement `https://www.soun7.com`)
 - Textes de la section "Réalisations" si de nouveaux projets doivent être
-  ajoutés (tableau `PROJECTS` dans `src/components/Realisations.tsx`)
+  ajoutés (`realisations.projects` dans `src/lib/content.ts`, détail dans
+  `src/lib/apps-content.ts`)
+
+## Motion et accessibilité
+
+Les animations respectent `prefers-reduced-motion` : le contenu s'affiche
+alors directement. Les états de départ des animations ne s'appliquent que si
+le script de la page a pu démarrer (classe `s7-motion` sur `<html>`), donc le
+contenu reste visible et indexable sans JavaScript.
+
+L'ancienne page `/realisations/benin-explore` redirige (308) vers
+`/realisations/balise` (`next.config.ts`).
 
 ## Déploiement
 

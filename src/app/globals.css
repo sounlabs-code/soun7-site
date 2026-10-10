@@ -11,8 +11,15 @@
   --s7-electric-blue: #1e78dc;
   --s7-night-blue: #0b2f63;
 
-  --background: var(--s7-black);
+  /* Motion-design extension: deep night tones + a discreet violet glint */
+  --s7-abyss: #02040b;
+  --s7-deep: #050b1a;
+  --s7-violet: #7b5cff;
+
+  --background: var(--s7-abyss);
   --foreground: var(--s7-white);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
@@ -27,6 +34,9 @@
   --color-s7-sky-blue: var(--s7-sky-blue);
   --color-s7-electric-blue: var(--s7-electric-blue);
   --color-s7-night-blue: var(--s7-night-blue);
+  --color-s7-abyss: var(--s7-abyss);
+  --color-s7-deep: var(--s7-deep);
+  --color-s7-violet: var(--s7-violet);
 
   --font-display: "Poppins", sans-serif;
   --font-body: "Montserrat", Arial, sans-serif;
@@ -36,12 +46,14 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--s7-abyss);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body);
+  overflow-x: hidden;
 }
 
 ::selection {
@@ -49,25 +61,50 @@ body {
   color: var(--s7-white);
 }
 
-/* Signature: dispersing pixel trail, echoing the S7 mark's particle break-off */
-@keyframes drift {
-  0%, 100% { transform: translate3d(0, 0, 0); opacity: var(--drift-op, 0.55); }
-  50% { transform: translate3d(var(--drift-x, 6px), var(--drift-y, -8px), 0); opacity: 1; }
+:focus-visible {
+  outline: 2px solid var(--s7-sky-blue);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
-.s7-pixel {
-  animation: drift var(--drift-dur, 6s) ease-in-out infinite;
-  animation-delay: var(--drift-delay, 0s);
+/* ---------- Atmosphere ---------- */
+
+.s7-noise {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.06) 1px, transparent 0);
+  background-size: 28px 28px;
 }
 
-@keyframes reveal {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
+.s7-grid {
+  background-image:
+    linear-gradient(rgba(89, 213, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(89, 213, 255, 0.07) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at center, #000 20%, transparent 75%);
 }
 
-.s7-reveal {
-  opacity: 0;
-  animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.s7-glass {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015));
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.s7-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-tech);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--s7-sky-blue);
+}
+.s7-eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--s7-sky-blue));
 }
 
 @keyframes gradientPan {
@@ -76,24 +113,226 @@ body {
 }
 
 .s7-gradient-text {
-  background: linear-gradient(90deg, var(--s7-silver-light), var(--s7-sky-blue), var(--s7-electric-blue), var(--s7-silver-light));
+  background: linear-gradient(90deg, var(--s7-silver-light), var(--s7-sky-blue), var(--s7-electric-blue), var(--s7-violet), var(--s7-silver-light));
   background-size: 250% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: gradientPan 8s linear infinite;
+  animation: gradientPan 9s linear infinite;
 }
+
+/* Buttons */
+.s7-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 999px;
+  padding: 0.95rem 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.35s var(--ease-out-expo), box-shadow 0.35s var(--ease-out-expo), border-color 0.35s;
+}
+.s7-btn:active { transform: scale(0.97); }
+.s7-btn-primary {
+  color: #fff;
+  background: linear-gradient(120deg, var(--s7-electric-blue), #2a8cff 55%, var(--s7-sky-blue));
+  box-shadow: 0 10px 40px -10px rgba(30, 120, 220, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.s7-btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.45) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.8s var(--ease-out-expo);
+}
+.s7-btn-primary:hover { box-shadow: 0 14px 50px -8px rgba(89, 213, 255, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.3); }
+.s7-btn-primary:hover::after { transform: translateX(120%); }
+.s7-btn-ghost {
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.03);
+}
+.s7-btn-ghost:hover { border-color: var(--s7-sky-blue); box-shadow: 0 0 30px -8px rgba(89, 213, 255, 0.6); }
+
+/* ---------- Hero ---------- */
+
+.s7-beam {
+  position: absolute;
+  top: -20%;
+  left: 0;
+  width: 22%;
+  height: 140%;
+  background: linear-gradient(90deg, transparent, rgba(89, 213, 255, 0.16), rgba(255, 255, 255, 0.08), transparent);
+  filter: blur(18px);
+  transform: skewX(-18deg) translateX(-160%);
+  pointer-events: none;
+}
+
+.s7-pedestal {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  width: 78%;
+  aspect-ratio: 4 / 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at center, rgba(89, 213, 255, 0.55) 0%, rgba(30, 120, 220, 0.25) 35%, transparent 70%);
+  filter: blur(2px);
+}
+.s7-pedestal::before,
+.s7-pedestal::after {
+  content: "";
+  position: absolute;
+  inset: 18% 6%;
+  border-radius: 50%;
+  border: 1px solid rgba(89, 213, 255, 0.55);
+  box-shadow: 0 0 24px rgba(89, 213, 255, 0.45), inset 0 0 24px rgba(89, 213, 255, 0.25);
+}
+.s7-pedestal::after {
+  inset: 34% 22%;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.s7-ring-pulse {
+  position: absolute;
+  left: 50%;
+  bottom: 9%;
+  width: 40%;
+  aspect-ratio: 4 / 1;
+  border-radius: 50%;
+  border: 1px solid rgba(89, 213, 255, 0.6);
+  transform: translateX(-50%) scale(0.4);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.s7-logo-shine {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: url("/brand/soun7_icone_couleur.png");
+  mask-image: url("/brand/soun7_icone_couleur.png");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.85) 50%, transparent 65%);
+  background-size: 300% 100%;
+  background-position: 150% 0;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.s7-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.s7-word > span { display: inline-block; will-change: transform; }
+
+/* ---------- Cards ---------- */
+
+.s7-tilt {
+  transform-style: preserve-3d;
+  transition: transform 0.6s var(--ease-out-expo), border-color 0.4s, box-shadow 0.6s;
+  will-change: transform;
+}
+.s7-tilt .s7-spot {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(89, 213, 255, 0.14), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+.s7-tilt:hover .s7-spot { opacity: 1; }
+
+/* Phone frame for real product footage */
+.s7-phone {
+  position: relative;
+  border-radius: 2.4rem;
+  padding: 0.55rem;
+  background: linear-gradient(145deg, #2a3038, #0c0f14 40%, #1b2027);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 40px 80px -20px rgba(0, 0, 0, 0.9),
+    0 0 70px -10px rgba(30, 120, 220, 0.55);
+}
+.s7-phone-screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.9rem;
+  background: #000;
+  aspect-ratio: 9 / 19.5;
+}
+.s7-phone-screen::before {
+  content: "";
+  position: absolute;
+  top: 0.55rem;
+  left: 50%;
+  width: 28%;
+  height: 1.15rem;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #000;
+  z-index: 3;
+}
+
+/* Animated SVG primitives for the six solution universes */
+@keyframes dashFlow { to { stroke-dashoffset: -200; } }
+@keyframes pulseNode { 0%, 100% { opacity: 0.35; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1.15); } }
+@keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes ledScan { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+@keyframes spinSlow { to { transform: rotate(360deg); } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+.s7-flow { stroke-dasharray: 6 14; animation: dashFlow 3s linear infinite; }
+.s7-node { transform-box: fill-box; transform-origin: center; animation: pulseNode 2.4s ease-in-out infinite; }
+.s7-float { animation: floatY 4s ease-in-out infinite; }
+.s7-spin { transform-box: fill-box; transform-origin: center; animation: spinSlow 18s linear infinite; }
+.s7-marquee { animation: marquee 40s linear infinite; }
+
+/* Scroll progress */
+.s7-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 60;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, var(--s7-electric-blue), var(--s7-sky-blue), var(--s7-violet));
+}
+
+/* Elements revealed by GSAP start hidden only once JS confirms it can animate them */
+.s7-motion [data-reveal] { opacity: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .s7-pixel, .s7-reveal, .s7-gradient-text {
+  .s7-gradient-text, .s7-flow, .s7-node, .s7-float, .s7-spin, .s7-marquee {
     animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
   }
+  .s7-motion [data-reveal] { opacity: 1 !important; }
 }
 
-.s7-noise {
-  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0);
-  background-size: 28px 28px;
+/* Hero intro start states (only when motion is enabled, set before first paint) */
+.s7-motion [data-word] { transform: translateY(135%); }
+.s7-motion [data-hero-fade],
+.s7-motion [data-hero-badge] { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .s7-motion [data-word] { transform: none !important; }
+  .s7-motion [data-hero-fade],
+  .s7-motion [data-hero-badge] { opacity: 1 !important; }
 }

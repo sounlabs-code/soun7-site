@@ -18,6 +18,7 @@ import "@fontsource/eb-garamond/500-italic.css";
 import "@fontsource/eb-garamond/600-italic.css";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/language-context";
+import MotionProvider from "@/components/MotionProvider";
 
 const siteUrl = "https://www.soun7.com";
 
@@ -38,6 +39,8 @@ export const metadata: Metadata = {
     "fibre optique",
     "solutions digitales entreprises",
     "transformation digitale Bénin Gabon",
+    "DISPO",
+    "Balise",
   ],
   authors: [{ name: "SOUN SET SARL" }],
   applicationName: "SOUN7",
@@ -79,9 +82,23 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="fr" className="h-full antialiased">
-      <body className="min-h-full flex flex-col bg-s7-black text-s7-white font-body">
-        <LanguageProvider>{children}</LanguageProvider>
+    <html lang="fr" className="h-full antialiased" suppressHydrationWarning>
+      <head>
+        {/* Arms the motion start-states before first paint (no flash of
+            content that is about to animate). If the animation code never
+            boots, the class is removed again and everything stays visible. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var d=document.documentElement;d.classList.add('s7-motion');setTimeout(function(){if(!window.__s7motion)d.classList.remove('s7-motion')},3500)}}catch(e){}",
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col bg-s7-abyss text-s7-white font-body">
+        <LanguageProvider>
+          <MotionProvider />
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );
